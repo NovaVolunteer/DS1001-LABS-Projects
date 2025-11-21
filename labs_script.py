@@ -7,18 +7,14 @@ This script contains the code from the Systems Project notebook,
 designed to ensure your environment is properly set up.
 """
 
-## First cell
-# run this for step 11 in your instructions
-
-print("Hello, World!")
-
-## Second cell
-# run this for step 14 in your instructions
-
 import pandas as pd
 
-## Part 3: Accessing your data
-# edit this code to load your data into your workspace
+
+# Basic environment check
+print("Hello, World!")
+
+
+# Data loading utilities
 
 def load_data(filepath):
     """

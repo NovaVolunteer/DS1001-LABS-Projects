@@ -1,0 +1,34 @@
+name: Prevent Automatic Pull Requests
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  check-pr-author:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Check if PR is from automation
+        run: |
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          PR_AUTHOR_TYPE="${{ github.event.pull_request.user.type }}"
+          echo "PR Author: $PR_AUTHOR"
+          echo "PR Author Type: $PR_AUTHOR_TYPE"
+          
+          # Check if the user type is Bot (GitHub's official bot indicator)
+          if [[ "$PR_AUTHOR_TYPE" == "Bot" ]]; then
+            echo "❌ Automatic pull requests from bots are not allowed in this repository."
+            echo "Please create pull requests manually."
+            exit 1
+          fi
+          
+          # Additional check for [bot] suffix as a fallback
+          if [[ "$PR_AUTHOR" =~ \[bot\]$ ]]; then
+            echo "❌ Automatic pull requests from bots are not allowed in this repository."
+            echo "Please create pull requests manually."
+            exit 1
+          fi
+          
+          echo "✅ PR author check passed"

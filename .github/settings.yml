@@ -1,0 +1,29 @@
+# Repository Settings
+
+# This file can be used with Probot Settings app
+# https://github.com/probot/settings
+
+repository:
+  # General repository settings
+  has_issues: true
+  has_wiki: false
+  has_downloads: true
+  has_projects: false
+  
+  # Update the default branch
+  default_branch: main
+
+# Branch protection rules
+branches:
+  - name: main
+    protection:
+      required_pull_request_reviews:
+        dismiss_stale_reviews: false
+        require_code_owner_reviews: false
+      required_status_checks:
+        strict: false
+        contexts:
+          - "check-pr-author"
+      enforce_admins: false
+      required_linear_history: false
+      restrictions: null
